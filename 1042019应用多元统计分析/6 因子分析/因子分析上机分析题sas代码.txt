@@ -1,0 +1,50 @@
+1.
+proc factor data=tmp2.exe6_1 method=prin r=v n=5 out=a1 outstat=stat1 reorder;
+run;
+
+data a2;
+set a1;
+f=(5.6327*factor1+2.7072*factor2+2.2692*factor3+1.3137*factor4+1.0431*factor5)/15;
+keep f factor1 factor2 factor3 factor4 factor5;
+run;
+
+proc sort data=a2 out=a3;
+by descending f;
+run;
+
+2.
+proc factor data=tmp2.exe6_2 method=prin r=v n=3 out=out outstat=stat reorder;
+var x1-x8;
+run;
+
+proc plot data=out;
+plot factor2*factor1 $ region='*'/herf=0 vref=0;
+run;
+
+data a1;
+set out;
+f=(3.4731*factor1+1.8997*factor2+1.8529*factor3)/8;
+keep f factor1-factor3;
+run;
+
+proc sort data=a1;
+by descendiing f;
+run;
+
+3.
+proc factor data=tmp2.exe6_3 r=v n=4 out=a1 outstat=stat reorder;
+run;
+
+proc plot data=a1;
+plot factor1*factor2 $ region='*'/herf=0 vref=0;
+run;
+
+data a2;
+set a1;
+f=(2.4470*factor1+1.6525*factor2+1.4361*factor3+1.3169*factor4)/8;
+keep region f factor1-factor4;
+run;
+
+proc sort data=a2;
+by descending f;
+run;
