@@ -1,0 +1,22 @@
+1.
+proc corresp data=tmp1.exe7_1 out=a1 rp cp short;
+var sci ei cpci_s;
+id subgect;
+run;
+
+2.
+proc corresp data=tmp1.exe7_2 out=a2 rp cp short;
+var x1-x4;
+id region;
+run;
+
+3.
+proc corresp data=tmp1.exe7_3 out=a3 rp cp short;
+var totally apartment cannot;
+id healthy;
+run;
+
+4.
+proc corresp data=tmp1.exe7_4 out=a4 rp cp short;
+tables row, column;
+run;
