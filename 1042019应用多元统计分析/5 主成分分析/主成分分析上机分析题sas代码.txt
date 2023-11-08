@@ -1,0 +1,88 @@
+1.
+(1)
+proc princomp data=tmp1.exe5_1 out=out5_1;                                                                                              
+run;
+
+proc princomp data=tmp1.exe5_1 n=3 out=out5_1 plot=score(ncomp=2);                                                                      
+id industry;                                                                                                                            
+run;
+
+(2)
+proc sort data=out5_1;                                                                                                                  
+by descending prin1;                                                                                                                    
+run;                                                                                                                                    
+                                                                                                                                        
+proc print;                                                                                                                             
+var industry prin1-prin3;                                                                                                               
+run;
+
+2.
+proc princomp data=tmp1.exe5_2 out=out5_2 plot=score(ncomp=2);
+id state;                                                                                              
+run;
+
+proc sort data=out5_2;                                                                                                                  
+by descending prin1;                                                                                                                    
+run;                                                                                                                                    
+                                                                                                                                        
+proc print;                                                                                                                             
+var state prin1;                                                                                                                        
+run;
+
+3.
+proc princomp data=tmp1.exe5_3 out=out5_3 plot=score(ncomp=2);                                                                          
+id region;                                                                                                                              
+run;
+
+proc sort data=out5_3;                                                                                                                  
+by descending prin1;                                                                                                                    
+run;                                                                                                                                    
+                                                                                                                                        
+proc print;                                                                                                                             
+var region prin1;                                                                                                                       
+run;
+
+4.
+proc princomp data=tmp1.exe5_4 n=3 out=out5_4 plot=score(ncomp=2);                                                                      
+id region;                                                                                                                              
+run;
+
+proc sort data=out5_4;                                                                                                                  
+by descending prin1;                                                                                                                    
+run;
+
+proc print;                                                                                                                             
+var region prin1;                                                                                                                       
+run;
+
+5.
+(1)
+proc corr data=tmp1.exe5_5;                                                                                                             
+var y x1 x2 x3;                                                                                                                         
+run;
+
+(2)
+proc reg data=tmp1.exe5_5;
+model y=x1 x2 x3;
+run;
+
+(3)
+proc standard data=tmp1.exe5_5 out=out5_5 mean=0 std=1;
+var y x1 x2 x3;
+run;
+
+proc princomp data=out5_5 prefix=z out=out5_5_princomp;
+var x1 x2 x3;
+run;
+
+proc reg data=out5_5_princomp;
+model y=z1 z2;
+run;
+
+或
+proc reg data=tmp1.exe5_5 outest=out;
+model y=x1-x3/pcomit=1,2;
+run;
+
+proc print data=out;
+run;
