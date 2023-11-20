@@ -1,0 +1,45 @@
+1.
+/*系统聚类法*/
+proc cluster data=tmp1.exe3_1 method=ward outtree=outtree standard;
+id region;
+run;
+
+proc tree data=outtree horizontal out=result n=5;
+run;
+
+/*快速聚类法*/
+proc standard data=tmp1.exe3_1 m=0 std=1 out=stout;
+run;
+
+data seed;
+set stout;
+if _n_=10 then output;
+if _n_=20 then output;
+if _n_=30 then output;
+run;
+
+proc fastclus maxclusters=4 data=stout seed=seed mean=stat out=output;
+run;
+
+2.
+/*系统聚类法*/
+proc cluster data=tmp1.exe3_2 method=ward outtree=outtree standard;
+id region;
+run;
+
+proc tree data=outtree horizontal out=result n=7;
+run;
+
+/*快速聚类法*/
+proc standard data=tmp1.exe3_2 m=0 std=1 out=stout;
+run;
+
+data seed;
+set stout;
+if _n_=10 then output;
+if _n_=20 then output;
+if _n_=30 then output;
+run;
+
+proc fastclus maxclusters=7 data=stout seed=seed mean=stat out=output;
+run;
