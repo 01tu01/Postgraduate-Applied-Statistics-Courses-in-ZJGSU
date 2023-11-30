@@ -1,0 +1,37 @@
+1.
+# ¾àÀëÅĞ±ğ
+proc discrim data=tmp1.exe4_1ts listerr testdata=tmp1.exe4_1ds out=out testout=testout outstat=outstat pool=no;
+class x5;
+var x1-x4;
+run;
+
+# ±´Ò¶Ë¹ÅĞ±ğ
+proc discrim data=tmp1.exe4_1ts listerr testdata=tmp1.exe4_1ds out=out testout=testout outstat=outstat pool=no;
+class x5;
+var x1-x4;
+priors '1'=0.2 '2'=0.8;
+run;
+
+2.
+# ¾àÀëÅĞ±ğ
+proc discrim data=tmp1.exe4_2 listerr out=out testout=testout outstat=outstat pool=no;
+class x6;
+var x1-x5;
+run;
+
+# ±´Ò¶Ë¹ÅĞ±ğ
+proc discrim data=tmp1.exe4_2 listerr out=out testout=testout outstat=outstat pool=no;
+class x6;
+var x1-x5;
+priors '1'=0.3 '2'=0.4 '3'=0.3;
+run;
+
+# ·ÑĞªÅĞ±ğ
+proc candisc data=tmp1.exe4_2 out=out;
+class x6;
+var x1-x5;
+run;
+
+proc plot data=out;
+plot can2*can1=x6;
+run;
